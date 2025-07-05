@@ -41,8 +41,8 @@ export class TasksController {
   }
 
   @Post()
-  public create(@Body() createTaskDto: CreateTaskDto): ITask {
-    return this.tasksService.create(createTaskDto);
+  public createTask(@Body() createTaskDto: CreateTaskDto): ITask {
+    return this.tasksService.createTask(createTaskDto);
   }
 
   @Patch('/:id/status')
@@ -65,11 +65,20 @@ export class TasksController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public delete(@Param('id') id: string): void {
+  public deleteTask(@Param('id') id: string): void {
     const task = this.tasksService.findOne(id);
     if (!task) {
       throw new NotFoundException();
     }
-    this.tasksService.delete(id);
+    this.tasksService.deleteTask(task);
+  }
+
+  @Patch('/:id')
+  public updatTask(
+    @Param() param: FindOneParams,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ): ITask {
+    const task = this.findOneOrFail(param.id);
+    return this.tasksService.updateTask(task, updateTaskDto);
   }
 }

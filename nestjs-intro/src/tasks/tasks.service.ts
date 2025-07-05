@@ -2,20 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { ITask } from './tasks.model';
 import { randomUUID } from 'node:crypto';
 import { CreateTaskDto } from './create-task.dto';
+import { UpdateTaskDto } from './update-task.dto';
 
 @Injectable()
 export class TasksService {
   private tasks: ITask[] = [];
 
-  findAll(): ITask[] {
+  public findAll(): ITask[] {
     return this.tasks;
   }
 
-  findOne(id: string): ITask | undefined {
+  public findOne(id: string): ITask | undefined {
     return this.tasks.find((task) => task.id === id);
   }
 
-  create(createTaskDto: CreateTaskDto): ITask {
+  public createTask(createTaskDto: CreateTaskDto): ITask {
     const task: ITask = {
       id: randomUUID(),
       ...createTaskDto,
@@ -24,10 +25,14 @@ export class TasksService {
     return task;
   }
 
-  delete(id: string): void {
-    const taskIndex = this.tasks.findIndex((task) => task.id === id);
-    if (taskIndex !== -1) {
-      this.tasks.splice(taskIndex, 1);
-    }
+  public updateTask(task: ITask, updateTaskDto: UpdateTaskDto): ITask {
+    Object.assign(task, updateTaskDto);
+    return task;
+  }
+
+  public deleteTask(task: ITask): void {
+    this.tasks = this.tasks.filter(
+      (filteredTask) => filteredTask.id !== task.id,
+    );
   }
 }
