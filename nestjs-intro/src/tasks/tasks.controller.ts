@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
@@ -57,5 +60,15 @@ export class TasksController {
       throw new NotFoundException();
     }
     return task;
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public delete(@Param('id') id: string): void {
+    const task = this.tasksService.findOne(id);
+    if (!task) {
+      throw new NotFoundException();
+    }
+    this.tasksService.delete(id);
   }
 }
