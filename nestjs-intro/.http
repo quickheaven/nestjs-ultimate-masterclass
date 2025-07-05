@@ -19,3 +19,43 @@ Content-Type: {{contentType}}
   "description": "Complete the NestJS course",
   "status": "OPEN"
 }
+
+### Validation error - status incorrect
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Learn NestJS",
+  "description": "Complete the NestJS course",
+  "status": "XXX"
+}
+
+### Validation error - empty title
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "",
+  "description": "Complete the NestJS course",
+  "status": "XXX"
+}
+
+### Validation error - title is null
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": null,
+  "description": "Complete the NestJS course",
+  "status": "XXX"
+}
+
+### Validation error - missing title property
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+
+  "description": "Complete the NestJS course",
+  "status": "XXX"
+}
