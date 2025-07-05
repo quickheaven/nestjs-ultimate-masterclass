@@ -77,5 +77,13 @@ Content-Type: {{contentType}}
   "status": "IN_PROGRESS"
 }
 
+### Update the task
+PATCH {{baseUrl}}/tasks/{{taskId}}
+Content-Type: {{contentType}}
+
+{
+  "status": "DONE"
+}
+
 ### Delete a task
 DELETE {{baseUrl}}/tasks/{{taskId}}

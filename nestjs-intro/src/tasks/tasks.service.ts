@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ITask } from './tasks.model';
+import { ITask, TaskStatus } from './tasks.model';
 import { randomUUID } from 'node:crypto';
 import { CreateTaskDto } from './create-task.dto';
 import { UpdateTaskDto } from './update-task.dto';
+import { WrongTaskStatusException } from './exceptions/wrong-task-status-exception';
 
 @Injectable()
 export class TasksService {
@@ -26,8 +27,29 @@ export class TasksService {
   }
 
   public updateTask(task: ITask, updateTaskDto: UpdateTaskDto): ITask {
+    if (
+      updateTaskDto.status &&
+      !this.isValidStatusTransition(task.status, updateTaskDto.status)
+    ) {
+      throw new WrongTaskStatusException();
+    }
     Object.assign(task, updateTaskDto);
     return task;
+  }
+
+  private isValidStatusTransition(
+    currentStatus: TaskStatus,
+    newStatus: TaskStatus,
+  ): boolean {
+    const statusOrder: TaskStatus[] = [
+      TaskStatus.OPEN,
+      TaskStatus.IN_PROGRESS,
+      TaskStatus.DONE,
+    ];
+    console.log(
+      `Checking status transition from ${currentStatus} to ${newStatus}`,
+    );
+    return statusOrder.indexOf(newStatus) <= statusOrder.indexOf(currentStatus);
   }
 
   public deleteTask(task: ITask): void {

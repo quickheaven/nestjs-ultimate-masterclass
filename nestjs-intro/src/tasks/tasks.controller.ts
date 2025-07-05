@@ -74,7 +74,7 @@ export class TasksController {
   }
 
   @Patch('/:id')
-  public updatTask(
+  public updateTask(
     @Param() param: FindOneParams,
     @Body() updateTaskDto: UpdateTaskDto,
   ): ITask {
