@@ -9,7 +9,7 @@ export class TasksService {
     return this.tasks;
   }
 
-  findOne(id: string): ITask {
-    this.tasks.find((task) => task.id === id);
+  findOne(id: string): ITask | undefined {
+    return this.tasks.find((task) => task.id === id);
   }
 }
