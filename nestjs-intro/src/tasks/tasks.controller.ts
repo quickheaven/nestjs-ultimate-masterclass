@@ -1,4 +1,5 @@
 import {
+    BadRequestException,
   Body,
   Controller,
   Delete,
@@ -16,6 +17,8 @@ import { CreateTaskDto } from './create-task.dto';
 import { FindOneParams } from './find-one.params';
 import { UpdateTaskStatusDto } from './update-task-status.dto';
 import { UpdateTaskDto } from './update-task.dto';
+import { WrongTaskStatusException } from './exceptions/wrong-task-status-exception';
+import { error } from 'console';
 
 @Controller('tasks')
 export class TasksController {
@@ -79,6 +82,13 @@ export class TasksController {
     @Body() updateTaskDto: UpdateTaskDto,
   ): ITask {
     const task = this.findOneOrFail(param.id);
-    return this.tasksService.updateTask(task, updateTaskDto);
+    try {
+      return this.tasksService.updateTask(task, updateTaskDto);
+    } catch (error) {
+      if (error instanceof WrongTaskStatusException) {
+        throw new BadRequestException(error.message);
+      }
+      throw error;
+    }
   }
 }

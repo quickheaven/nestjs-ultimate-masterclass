@@ -7,6 +7,13 @@
 http://localhost:3000/
 
 
+### Get all tasks
+
+GET {{baseUrl}}/tasks
+
+### Get one task
+GET {{baseUrl}}/tasks/{{taskId}}
+
 ### Create a new task
 # @name createTask
 POST {{baseUrl}}/tasks
@@ -20,14 +27,6 @@ Content-Type: {{contentType}}
 
 ### Set the task id
 @taskId = {{createTask.response.body.id}}
-
-### Get all tasks
-
-GET {{baseUrl}}/tasks
-
-### Get one task
-GET {{baseUrl}}/tasks/{{taskId}}
-
 
 ### Validation error - status incorrect
 POST {{baseUrl}}/tasks
