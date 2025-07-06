@@ -4,7 +4,7 @@
 @contentType = application/json
 
 ## The basic request
-http://localhost:3000/
+{{baseUrl}}
 
 
 ### Get all tasks
