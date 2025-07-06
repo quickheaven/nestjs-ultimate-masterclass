@@ -8,14 +8,16 @@ import { TasksModule } from './tasks/tasks.module';
 import { ConfigModule } from '@nestjs/config';
 import { appConfig } from './config/app.config';
 import { appConfigSchema } from './config/config.types';
+import { typeOrmConfig } from './config/database.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [appConfig], // Load configuration files here
+      load: [appConfig, typeOrmConfig], // Load configuration files here
       validationSchema: appConfigSchema, // Optional: Validate configuration schema
       validationOptions: {
-        allowUnknown: false,
+        //allowUnknown: false, // Error after installing TypeORM: Config validation error: "ACLOCAL_PATH" is not allowed
+        allowUnknown: true, // Temporary workaround for unknown properties
         abortEarly: true,
       },
     }),
