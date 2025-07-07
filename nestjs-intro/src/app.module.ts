@@ -5,19 +5,25 @@ import { DummyService } from './dummy/dummy.service';
 import { MessageFormatterService } from './message-formatter/message-formatter.service';
 import { LoggerService } from './logger/logger.service';
 import { TasksModule } from './tasks/tasks.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { appConfig } from './config/app.config';
-import { appConfigSchema } from './config/config.types';
+import { appConfigSchema, ConfigType } from './config/config.types';
 import { typeOrmConfig } from './config/database.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService<ConfigType>) => ({
+        ...configService.get('database'),
+      }),
+    }),
     ConfigModule.forRoot({
-      load: [appConfig, typeOrmConfig], // Load configuration files here
-      validationSchema: appConfigSchema, // Optional: Validate configuration schema
+      load: [appConfig, typeOrmConfig],
+      validationSchema: appConfigSchema,
       validationOptions: {
-        //allowUnknown: false, // Error after installing TypeORM: Config validation error: "ACLOCAL_PATH" is not allowed
-        allowUnknown: true, // Temporary workaround for unknown properties
         abortEarly: true,
       },
     }),
