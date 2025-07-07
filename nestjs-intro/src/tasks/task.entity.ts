@@ -4,7 +4,7 @@ import { TaskStatus } from './tasks.model';
 @Entity()
 export class Task {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({
     type: 'varchar',
