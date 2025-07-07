@@ -14,4 +14,5 @@ export const appConfigSchema = Joi.object({
   DB_USER: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
   DB_DATABASE: Joi.string().required(),
+  DB_SYNC: Joi.boolean().default(false),
 });
