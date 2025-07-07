@@ -6,12 +6,27 @@ export class Task {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+    unique: true, // Ensures that each task title is unique
+    nullable: false, // Title cannot be null
+    default: '', // Default value if not provided
+  })
   title: string;
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: false, // Description cannot be null
+    default: '', // Default value if not provided
+  })
   description: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: TaskStatus,
+    default: TaskStatus.PENDING, // Default status is PENDING
+    nullable: false, // Status cannot be null
+  })
   status: TaskStatus;
 }
