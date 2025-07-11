@@ -1,29 +1,27 @@
-import { Task } from 'src/tasks/task.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import { Task } from './task.entity';
 
 @Entity()
-export class User {
+export class TaskLabel {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
 
-  @Column()
-  email: string;
+  @ManyToOne(() => Task, (task) => task.labels)
+  taskId: Task;
 
   @CreateDateColumn()
   createdAt: Date;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToMany(() => Task, (task) => task.user, {})
-  tasks: Task[];
 }
