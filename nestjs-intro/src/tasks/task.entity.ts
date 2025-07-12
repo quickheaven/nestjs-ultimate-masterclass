@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { TaskStatus } from './tasks.model';
 import { User } from './../users/user.entity';
 import { TaskLabel } from './task-label.entity';
@@ -41,6 +47,9 @@ export class Task {
   @ManyToOne(() => User, (user) => user.tasks, { nullable: false })
   user: User;
 
-  @OneToMany(() => TaskLabel, (label) => label.taskId)
+  @OneToMany(() => TaskLabel, (label) => label.taskId, {
+    cascade: true,
+    orphanedRowAction: 'delete', // Automatically delete labels when the task is deleted
+  })
   labels: TaskLabel[];
 }
