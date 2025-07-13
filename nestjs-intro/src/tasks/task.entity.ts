@@ -49,7 +49,6 @@ export class Task {
 
   @OneToMany(() => TaskLabel, (label) => label.taskId, {
     cascade: true,
-    orphanedRowAction: 'delete', // Automatically delete labels when the task is deleted
   })
   labels: TaskLabel[];
 }

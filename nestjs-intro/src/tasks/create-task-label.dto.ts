@@ -5,5 +5,4 @@ export class CreateTaskLabelDto {
   @IsNotEmpty()
   @MaxLength(50)
   name: string;
-  taskId: string;
 }

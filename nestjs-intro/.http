@@ -20,10 +20,11 @@ POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
 
 {
-  "title": "Learn NestJS 789",
+  "title": "Learn NestJS",
   "description": "Complete the NestJS course",
   "status": "OPEN",
-  "userId": "a067cf9d-0550-40da-a6e5-7fd547842430"
+  "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b"
+
 }
 
 ### Set the task id
