@@ -18,6 +18,7 @@ import { UpdateTaskStatusDto } from './update-task-status.dto';
 import { UpdateTaskDto } from './update-task.dto';
 import { WrongTaskStatusException } from './exceptions/wrong-task-status-exception';
 import { Task } from './task.entity';
+import { CreateTaskLabelDto } from './create-task-label.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -90,5 +91,15 @@ export class TasksController {
       }
       throw error;
     }
+  }
+
+  @Post('/:id/labels')
+  @HttpCode(HttpStatus.CREATED)
+  public async addLabels(
+    @Param() { id }: FindOneParams,
+    @Body() labelDtos: CreateTaskLabelDto[],
+  ): Promise<Task> {
+    const task = await this.findOneOrFail(id);
+    return await this.tasksService.addLabels(task, labelDtos);
   }
 }

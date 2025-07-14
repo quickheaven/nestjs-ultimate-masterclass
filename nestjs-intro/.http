@@ -17,7 +17,7 @@ POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
 
 {
-  "title": "Learn NestJS 07122025 0851",
+  "title": "Learn NestJS 07122025 0908",
   "description": "Complete the NestJS course",
   "status": "OPEN",
   "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b",
@@ -32,7 +32,7 @@ Content-Type: {{contentType}}
 @taskId = {{createTask.response.body.id}}
 
 ### Get one task
-GET {{baseUrl}}/tasks/{{taskId}}
+GET {{baseUrl}}/tasks/{{taskId}} 
 
 ### Validation error - status incorrect
 POST {{baseUrl}}/tasks
@@ -41,7 +41,8 @@ Content-Type: {{contentType}}
 {
   "title": "Learn NestJS",
   "description": "Complete the NestJS course",
-  "status": "XXX"
+  "status": "XXX",
+  "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b"
 }
 
 ### Validation error - empty title
@@ -51,7 +52,8 @@ Content-Type: {{contentType}}
 {
   "title": "",
   "description": "Complete the NestJS course",
-  "status": "XXX"
+  "status": "OPEN",
+  "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b"
 }
 
 ### Validation error - title is null
@@ -61,7 +63,8 @@ Content-Type: {{contentType}}
 {
   "title": null,
   "description": "Complete the NestJS course",
-  "status": "XXX"
+  "status": "OPEN",
+  "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b"
 }
 
 ### Validation error - missing title property
@@ -71,7 +74,7 @@ Content-Type: {{contentType}}
 {
 
   "description": "Complete the NestJS course",
-  "status": "XXX"
+  "status": "OPEN"
 }
 
 ### Update the task status
@@ -89,8 +92,23 @@ Content-Type: {{contentType}}
 
 {
   "status": "OPEN",
-  "labels": []
+  "labels": [{
+    "name": "done"
+  }]
 }
 
 ### Delete a task
 DELETE {{baseUrl}}/tasks/{{taskId}}
+
+### Add specific labels to task
+# @name addLabels
+POST {{baseUrl}}/tasks/{{taskId}}/labels
+Content-Type: {{contentType}}
+[
+  {
+    "name": "urgent"
+  },
+  {
+    "name": "bug"
+  }
+]
