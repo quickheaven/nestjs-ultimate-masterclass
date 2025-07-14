@@ -17,7 +17,7 @@ POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
 
 {
-  "title": "Learn NestJS 07122025 1017",
+  "title": "Learn NestJS 07122025 1028",
   "description": "Complete the NestJS course",
   "status": "OPEN",
   "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b",
@@ -113,3 +113,10 @@ Content-Type: {{contentType}}
     "name": "bug"
   }
 ]
+
+### Remove specific labels from task
+# @name removeLabels
+DELETE {{baseUrl}}/tasks/{{taskId}}/labels
+Content-Type: {{contentType}}
+
+["priorize", "bug"]

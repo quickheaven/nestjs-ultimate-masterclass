@@ -104,4 +104,14 @@ export class TasksService {
     const uniqueNames = [...new Set(labelDtos.map((label) => label.name))];
     return uniqueNames.map((name) => ({ name }));
   }
+
+  public async removeLabels(
+    task: Task,
+    labelsToRemove: string[],
+  ): Promise<Task> {
+    task.labels = task.labels.filter(
+      (label) => !labelsToRemove.includes(label.name),
+    );
+    return await this.taskRepository.save(task);
+  }
 }
