@@ -74,7 +74,12 @@ export class TasksService {
   }
 
   public async deleteTask(task: Task): Promise<void> {
-    await this.taskRepository.delete(task);
+    //await this.taskRepository.delete(task); // Error: Cannot query across one-to-many for property labels
+
+    // Use remove to handle the one-to-many relationship properly
+    // This will also handle the deletion of labels due to orphanedRowAction
+    // await this.taskRepository.delete(task.id);
+    await this.taskRepository.remove(task);
   }
 
   public async addLabels(

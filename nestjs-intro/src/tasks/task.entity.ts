@@ -17,7 +17,7 @@ export class Task {
   @Column({
     type: 'varchar',
     length: 255,
-    unique: true, // Ensures that each task title is unique
+    unique: false,
     nullable: false, // Title cannot be null
     default: '', // Default value if not provided
   })
