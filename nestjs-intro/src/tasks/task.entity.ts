@@ -47,8 +47,9 @@ export class Task {
   @ManyToOne(() => User, (user) => user.tasks, { nullable: false })
   user: User;
 
-  @OneToMany(() => TaskLabel, (label) => label.taskId, {
+  @OneToMany(() => TaskLabel, (label) => label.task, {
     cascade: true,
+    orphanedRowAction: 'delete', // Automatically delete labels when the task is deleted
   })
   labels: TaskLabel[];
 }

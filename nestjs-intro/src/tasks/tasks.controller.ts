@@ -38,7 +38,7 @@ export class TasksController {
   }  
   */
   @Get('/:id')
-  public async findOne(@Param('id') params: FindOneParams): Promise<Task> {
+  public async findOne(@Param() params: FindOneParams): Promise<Task> {
     return await this.findOneOrFail(params.id);
   }
 
@@ -58,6 +58,7 @@ export class TasksController {
   }
 
   private async findOneOrFail(id: string): Promise<Task> {
+    console.log(`Finding task with id: ${id}`);
     const task = await this.tasksService.findOne(id);
     if (!task) {
       throw new NotFoundException();

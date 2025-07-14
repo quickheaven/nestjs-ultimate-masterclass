@@ -19,7 +19,11 @@ export class TasksService {
   }
 
   public async findOne(id: string): Promise<Task | null> {
-    return await this.taskRepository.findOneBy({ id });
+    // return await this.taskRepository.findOneBy({ id });
+    return await this.taskRepository.findOne({
+      where: { id },
+      relations: ['labels'], // Include labels relation if needed
+    });
   }
 
   public async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
