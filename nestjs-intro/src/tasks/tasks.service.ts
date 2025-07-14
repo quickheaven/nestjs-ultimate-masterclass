@@ -81,11 +81,16 @@ export class TasksService {
     task: Task,
     labelDtos: CreateTaskLabelDto[],
   ): Promise<Task> {
-    const labels = labelDtos.map((label) =>
-      this.labelsRepository.create(label),
-    );
-    task.labels = [...task.labels, ...labels];
-    return await this.taskRepository.save(task);
+    const names = new Set(task.labels.map((label) => label.name));
+    const labels = this.getUniqueLabels(labelDtos)
+      .filter((dto) => !names.has(dto.name))
+      .map((label) => this.labelsRepository.create(label));
+
+    if (labels.length) {
+      task.labels = [...task.labels, ...labels];
+      return await this.taskRepository.save(task);
+    }
+    return task;
   }
 
   private getUniqueLabels(
