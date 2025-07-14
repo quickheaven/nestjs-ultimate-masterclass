@@ -17,7 +17,7 @@ POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
 
 {
-  "title": "Learn NestJS 07122025 0908",
+  "title": "Learn NestJS 07122025 1017",
   "description": "Complete the NestJS course",
   "status": "OPEN",
   "userId": "5685ac5d-34c6-4abd-9495-354b2a66cf9b",
@@ -104,9 +104,10 @@ DELETE {{baseUrl}}/tasks/{{taskId}}
 # @name addLabels
 POST {{baseUrl}}/tasks/{{taskId}}/labels
 Content-Type: {{contentType}}
+
 [
   {
-    "name": "urgent"
+    "name": "prioritize"
   },
   {
     "name": "bug"

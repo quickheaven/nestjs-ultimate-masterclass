@@ -32,6 +32,10 @@ export class TasksService {
   }
 
   public async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    if (createTaskDto.labels) {
+      // Ensure labels are unique by name
+      createTaskDto.labels = this.getUniqueLabels(createTaskDto.labels);
+    }
     return await this.taskRepository.save(createTaskDto);
   }
 
@@ -45,6 +49,11 @@ export class TasksService {
     ) {
       throw new WrongTaskStatusException();
     }
+    if (updateTaskDto.labels) {
+      // Ensure labels are unique by name
+      updateTaskDto.labels = this.getUniqueLabels(updateTaskDto.labels);
+    }
+
     Object.assign(task, updateTaskDto);
     return await this.taskRepository.save(task);
   }
@@ -77,5 +86,12 @@ export class TasksService {
     );
     task.labels = [...task.labels, ...labels];
     return await this.taskRepository.save(task);
+  }
+
+  private getUniqueLabels(
+    labelDtos: CreateTaskLabelDto[],
+  ): CreateTaskLabelDto[] {
+    const uniqueNames = [...new Set(labelDtos.map((label) => label.name))];
+    return uniqueNames.map((name) => ({ name }));
   }
 }
