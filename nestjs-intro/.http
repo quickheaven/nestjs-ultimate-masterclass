@@ -8,8 +8,13 @@
 
 
 ### Get all tasks
-
+# @name getAllTasks
 GET {{baseUrl}}/tasks
+
+### Get all in progress tasks
+# @name getInProgressTasks
+GET {{baseUrl}}/tasks?status=IN_PROGRESS
+
 
 ### Create a new task
 # @name createTask
@@ -91,7 +96,7 @@ PATCH {{baseUrl}}/tasks/{{taskId}}
 Content-Type: {{contentType}}
 
 {
-  "status": "OPEN",
+  "status": "IN_PROGRESS",
   "labels": [{
     "name": "done"
   }]
@@ -119,4 +124,4 @@ Content-Type: {{contentType}}
 DELETE {{baseUrl}}/tasks/{{taskId}}/labels
 Content-Type: {{contentType}}
 
-["priorize", "bug"]
+["prioritize", "bug"]

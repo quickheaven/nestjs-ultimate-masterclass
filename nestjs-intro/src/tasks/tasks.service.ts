@@ -8,6 +8,7 @@ import { Task } from './task.entity';
 import { TaskStatus } from './tasks.model';
 import { CreateTaskLabelDto } from './create-task-label.dto';
 import { TaskLabel } from './task-label.entity';
+import { FindTaskParams } from './find-task-params';
 
 @Injectable()
 export class TasksService {
@@ -19,8 +20,13 @@ export class TasksService {
     private readonly labelsRepository: Repository<TaskLabel>,
   ) {}
 
-  public async findAll(): Promise<Task[]> {
-    return await this.taskRepository.find();
+  public async findAll(filters: FindTaskParams): Promise<Task[]> {
+    return await this.taskRepository.find({
+      where: {
+        status: filters.status,
+      },
+      relations: ['labels'],
+    });
   }
 
   public async findOne(id: string): Promise<Task | null> {
@@ -68,9 +74,10 @@ export class TasksService {
       TaskStatus.DONE,
     ];
     console.log(
-      `Checking status transition from ${currentStatus} to ${newStatus}`,
+      `Checking status transition from ${currentStatus} to ${newStatus}. ${statusOrder.indexOf(newStatus)} <= ${statusOrder.indexOf(currentStatus)}`,
     );
-    return statusOrder.indexOf(newStatus) <= statusOrder.indexOf(currentStatus);
+
+    return statusOrder.indexOf(currentStatus) <= statusOrder.indexOf(newStatus);
   }
 
   public async deleteTask(task: Task): Promise<void> {
