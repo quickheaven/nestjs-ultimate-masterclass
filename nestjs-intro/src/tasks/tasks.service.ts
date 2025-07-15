@@ -20,7 +20,7 @@ export class TasksService {
     @InjectRepository(TaskLabel)
     private readonly labelsRepository: Repository<TaskLabel>,
   ) {}
-
+  /*
   public async findAll(
     filters: FindTaskParams,
     pagination: PaginationParams,
@@ -44,6 +44,30 @@ export class TasksService {
       skip: pagination.offset,
       take: pagination.limit,
     });
+  }
+  */
+  public async findAll(
+    filters: FindTaskParams,
+    pagination: PaginationParams,
+  ): Promise<[Task[], number]> {
+    const query = this.taskRepository
+      .createQueryBuilder('task')
+      .leftJoinAndSelect('task.labels', 'labels');
+
+    if (filters.status) {
+      query.andWhere('task.status = :status', { status: filters.status });
+    }
+
+    if (filters.search?.trim()) {
+      const searchTerm = `%${filters.search.trim()}%`;
+      query.andWhere(
+        '(task.title LIKE :search OR task.description LIKE :search)',
+        { search: searchTerm },
+      );
+    }
+    query.skip(pagination.offset).take(pagination.limit);
+    return await query.getManyAndCount();
+
   }
 
   public async findOne(id: string): Promise<Task | null> {

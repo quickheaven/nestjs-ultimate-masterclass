@@ -9,7 +9,7 @@
 
 ### Get all tasks
 # @name getAllTasks
-GET {{baseUrl}}/tasks?limit=2&offset=0
+GET {{baseUrl}}/tasks?limit=10&offset=2
 
 ### Get all in progress tasks
 # @name getAllInProgressTasks
@@ -17,7 +17,7 @@ GET {{baseUrl}}/tasks?status=IN_PROGRESS
 
 ### Get all tasks with search query
 # @name getAllTasksWithSearch
-GET {{baseUrl}}/tasks?search=NestJS
+GET {{baseUrl}}/tasks?search=07122025 0852 
 
 
 
