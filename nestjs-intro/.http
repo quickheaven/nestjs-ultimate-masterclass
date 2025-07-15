@@ -19,6 +19,9 @@ GET {{baseUrl}}/tasks?status=IN_PROGRESS
 # @name getAllTasksWithSearch
 GET {{baseUrl}}/tasks?search=07122025 0852 
 
+### Get all tasks with search query
+# @name getAllTasksFilteredByLabels
+GET {{baseUrl}}/tasks?label=urgent
 
 
 ### Create a new task
