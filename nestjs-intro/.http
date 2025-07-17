@@ -24,6 +24,10 @@ GET {{baseUrl}}/tasks?search=07122025 0852
 GET {{baseUrl}}/tasks?label=urgent
 
 
+### Get all tasks sorted by createdAt
+# @name getAllTasksSortedByCreatedAt
+GET {{baseUrl}}/tasks?sort=createdAt&order=DESC
+
 ### Create a new task
 # @name createTask
 POST {{baseUrl}}/tasks
