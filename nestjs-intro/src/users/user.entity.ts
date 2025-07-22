@@ -1,4 +1,4 @@
-import { Task } from 'src/tasks/task.entity';
+import { Task } from '../tasks/task.entity';
 import {
   Column,
   CreateDateColumn,
@@ -17,6 +17,9 @@ export class User {
 
   @Column()
   email: string;
+
+  @Column({ nullable: true })
+  password: string;
 
   @CreateDateColumn()
   createdAt: Date;
