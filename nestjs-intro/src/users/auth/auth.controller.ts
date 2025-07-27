@@ -36,6 +36,6 @@ export class AuthController {
       loginDto.password,
     );
 
-    return { accessToken };
+    return new LoginResponse({ accessToken });
   }
 }
