@@ -7,7 +7,7 @@ import { LoggerService } from './logger/logger.service';
 import { TasksModule } from './tasks/tasks.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { appConfig } from './config/app.config';
-import { appConfigSchema, ConfigType } from './config/config.types';
+import { appConfigSchema } from './config/config.types';
 import { typeOrmConfig } from './config/database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypedConfigService } from './config/type-config.service';
@@ -28,6 +28,7 @@ import { UsersModule } from './users/users.module';
       }),
     }),
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [appConfig, typeOrmConfig, authConfig],
       validationSchema: appConfigSchema,
       validationOptions: {
