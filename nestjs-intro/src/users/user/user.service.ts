@@ -20,7 +20,7 @@ export class UserService {
       createUserDto.password,
     );
     const user = this.userRepository.create({
-      ...CreateUserDto,
+      ...createUserDto,
       password: hashedPassword,
     });
     return this.userRepository.save(user);
