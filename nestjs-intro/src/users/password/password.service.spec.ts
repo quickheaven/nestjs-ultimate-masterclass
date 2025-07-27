@@ -30,4 +30,24 @@ describe('PasswordService', () => {
     expect(bcrypt.hash).toHaveBeenCalledWith(password, service['SALT_ROUNDS']);
     expect(result).toBe(mockedHash);
   });
+
+  it('should correctly verify a password', async () => {
+    const password = 'password123';
+    const hashedPassword = 'hashedPassword';
+    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+    const isMatch = await service.verify(password, hashedPassword);
+    expect(bcrypt.compare).toHaveBeenCalledWith(password, hashedPassword);
+    expect(isMatch).toBe(true);
+  });
+
+  it('should fail on incorrect password', async () => {
+    const password = 'wrongPassword';
+    const hashedPassword = 'hashedPassword';
+    (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+    const isMatch = await service.verify(password, hashedPassword);
+    expect(bcrypt.compare).toHaveBeenCalledWith(password, hashedPassword);
+    expect(isMatch).toBe(false);
+  });
 });
