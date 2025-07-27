@@ -31,17 +31,30 @@ describe('CreateUserDto', () => {
     expect(errors[0].constraints).toHaveProperty('isEmail');
   });
 
-  it('should return specific validation messages', async () => {
-    // Arrange
-    dto.password = 'abcdfa';
-    // Act
+  const testPassword = async (password: string, expectedError: string) => {
+    dto.password = password;
     const errors = await validate(dto);
-    // Assert
     const passwordError = errors.find((error) => error.property === 'password');
     expect(passwordError).not.toBeUndefined();
     const messages = Object.values(passwordError?.constraints ?? {});
-    expect(messages).toContain(
+    expect(messages).toContain(expectedError);
+  };
+
+  it('should fail without 1 upper case letter', async () => {
+    await testPassword(
+      'abcdfa',
       'Password must contain at least 1 uppercase letter',
+    );
+  });
+
+  it('should fail without 1 number', async () => {
+    await testPassword('abcdfA', 'Password must contain at least 1 number');
+  });
+
+  it('should fail without at least 1 special character', async () => {
+    await testPassword(
+      'abdefaA1',
+      'Password must contain at least 1 special character',
     );
   });
 });
