@@ -80,4 +80,8 @@ describe('AppController (e2e)', () => {
         expect(res.body).not.toHaveProperty('password');
       });
   });
+
+  it('should required auth', () => {
+    return request(testSetup.app.getHttpServer()).get('/tasks').expect(401);
+  });
 });
