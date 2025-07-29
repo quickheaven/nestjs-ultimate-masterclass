@@ -20,6 +20,7 @@ import { LoginResponse } from '../login.response';
 import { AuthRequest } from '../auth.request';
 import { UserService } from '../user/user.service';
 import { AuthGuard } from '../auth.guard';
+import { Public } from '../decorators/public.decorator';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -33,6 +34,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @Public() // This decorator marks the route as public, bypassing the AuthGuard
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() createUserDto: CreateUserDto): Promise<User> {
     const user = this.authService.register(createUserDto);
@@ -40,6 +42,8 @@ export class AuthController {
   }
 
   @Post('login')
+  @Public() // This decorator marks the route as public, bypassing the AuthGuard
+  @HttpCode(HttpStatus.CREATED)
   async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
     const accessToken = await this.authService.login(
       loginDto.email,
