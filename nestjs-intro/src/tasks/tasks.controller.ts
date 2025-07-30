@@ -64,6 +64,7 @@ export class TasksController {
   @Post()
   public async createTask(
     @Body() createTaskDto: CreateTaskDto,
+    // @Request() request: AuthRequest,
     @CurrentUserId() userId: string,
   ): Promise<Task> {
     return await this.tasksService.createTask({
