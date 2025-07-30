@@ -23,6 +23,7 @@ import { CreateTaskLabelDto } from './create-task-label.dto';
 import { FindTaskParams } from './find-task-params';
 import { PaginationParams } from '../common/pagination.params';
 import { PaginationResponse } from '../common/pagination.response';
+import { CurrentUserId } from './../users/decorators/current-user-id.decorator';
 
 @Controller('tasks')
 export class TasksController {
@@ -38,7 +39,7 @@ export class TasksController {
       data: items,
       meta: {
         total,
-        ... pagination,
+        ...pagination,
         //offset: pagination.offset,
         //limit: pagination.limit,
       },
@@ -61,8 +62,14 @@ export class TasksController {
   }
 
   @Post()
-  public async createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
-    return await this.tasksService.createTask(createTaskDto);
+  public async createTask(
+    @Body() createTaskDto: CreateTaskDto,
+    @CurrentUserId() userId: string,
+  ): Promise<Task> {
+    return await this.tasksService.createTask({
+      ...createTaskDto,
+      userId
+    });
   }
 
   @Patch('/:id/status')
